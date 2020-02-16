@@ -91,3 +91,21 @@
 ;; => :zero-point
 (get {:wheels 2 :pedal 2 :frame 1 :seat 1} :horn 0)
 ;; => 0
+
+;; nth
+
+(nth [:desk :chair :cabinet :bookcase] 2)
+;; => :cabinet
+
+(nth #{:lumen :decibel :psi :mass} 2)
+;; => UnsupportedOperationException
+(nth {:wheels 2 :pedal 2 :frame 1 :seat 1} 2)
+;; => UnsupportedOperationException
+
+;; When "key" is not found IndexedError is thrown
+(nth [:desk :chair :cabinet :bookcase] 6)
+;; => IndexOutOfBoundsException
+
+;; Adding a default returns default when out of bounds
+(nth [:desk :chair :cabinet :bookcase] 6 :no-furniture)
+;; => :no-furniture
