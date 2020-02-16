@@ -14,3 +14,19 @@
 ;; => nil
 (first {})
 ;; => nil
+
+;; second
+(second [:red :orange :yellow :blue :indigo :violet])
+;; => :orange
+(second #{:elm :birch :oak :willow})
+;; => :willow
+(second {:bedroom 4 :bathroom 2.5 :kitchen 1 :square_feet 2300})
+;; => [:bathroom 2.5]
+
+;; For empty collection nil is returned
+(second [])
+;; => nil
+(second #{})
+;; => nil
+(second {})
+;; => nil
