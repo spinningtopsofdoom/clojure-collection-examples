@@ -17,3 +17,12 @@
 ;; => nil
 (seq {})
 ;; => nil
+
+;; reverse
+
+(reverse [:lollipop :chocolate-bar :mint])
+;; => (:mint :chocolate-bar :lollipop)
+(reverse #{:peas :cucumber :zucchini})
+;; => (:cucumber :zucchini :peas)
+(reverse {:phone 4 :camera 3 :gyroscope 2})
+;; => ([:gyroscope 2] [:camera 3] [:phone 4])
