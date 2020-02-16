@@ -49,3 +49,20 @@
 ;; => nil
 (last {})
 ;; => nil
+
+;; ffirst
+
+(ffirst [[:table :chair] [:sofa :tv] [:bed :bookshelf]])
+;; => :table
+(ffirst #{#{:add :subtract :multiply} #{:shoes :shirt :pants}})
+;; => :shoes
+(ffirst {:rooms 56 :pool 1 :elevators 5})
+;; => :rooms
+
+;; For empty collection nil is returned
+(ffirst [])
+;; => nil
+(ffirst #{})
+;; => nil
+(ffirst {})
+;; => nil
