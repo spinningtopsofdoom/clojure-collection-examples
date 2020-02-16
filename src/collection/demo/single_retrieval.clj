@@ -1,4 +1,4 @@
-(ns collection.demo.single-item)
+(ns collection.demo.single-retrieval)
 ;; Retrieving a single item from a collection
 
  ;; first
