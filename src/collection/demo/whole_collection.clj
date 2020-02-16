@@ -26,3 +26,14 @@
 ;; => (:cucumber :zucchini :peas)
 (reverse {:phone 4 :camera 3 :gyroscope 2})
 ;; => ([:gyroscope 2] [:camera 3] [:phone 4])
+
+;; shuffle
+
+(shuffle [:lollipop :chocolate-bar :mint])
+;; => [:chocolate-bar :mint :lollipop]
+;; => [:lollipop :chocolate-bar :mint]
+(shuffle #{:peas :cucumber :zucchini})
+;; => [:peas :cucumber :zucchini]
+;; => [:cucumber :peas :zucchini]
+(shuffle {:phone 4 :camera 3 :gyroscope 2})
+;; => ClassCastException Can not cast to java.util.Collection
