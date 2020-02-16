@@ -54,3 +54,20 @@
 ;; => (:zucchini :peas :cucumber)
 (sort (fn compare-fn [a b] (compare b a)) {:phone 4 :camera 3 :gyroscope 2})
 ;; => ([:phone 4] [:gyroscope 2] [:camera 3])
+
+;; sort-by
+
+(sort-by (fn key-len [key] (count (str key))) [:lollipop :chocolate-bar :mint])
+;; => (:mint :lollipop :chocolate-bar)
+(sort-by (fn key-len [key] (count (str key))) #{:peas :cucumber :zucchini})
+;; => (:peas :zucchini :cucumber)
+(sort-by (fn key-len [key] (count (str key))) {:phone 4 :camera 3 :gyroscope 2})
+;; => ([:phone 4] [:camera 3] [:gyroscope 2])
+
+;; Change comparison function for sorting
+(sort-by (fn key-len [key] (count (str key))) (fn compare-fn [a b] (compare b a)) [:lollipop :chocolate-bar :mint])
+;; => (:chocolate-bar :lollipop :mint)
+(sort-by (fn key-len [key] (count (str key))) (fn compare-fn [a b] (compare b a)) #{:peas :cucumber :zucchini})
+;; => (:zucchini :cucumber :peas)
+(sort-by (fn key-len [key] (count (str key))) (fn compare-fn [a b] (compare b a)) {:phone 4 :camera 3 :gyroscope 2})
+;; => ([:gyroscope 2] [:camera 3] [:phone 4])
