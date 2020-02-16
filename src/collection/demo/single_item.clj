@@ -32,3 +32,20 @@
 ;; => nil
 (second {})
 ;; => nil
+
+;; last
+
+(last [:desk :chair :cabinet :bookcase])
+;; => :bookcase
+(last #{:lumen :decibel :psi :mass})
+;; => :lumen
+(last {:wheels 2 :pedal 2 :frame 1 :seat 1})
+;; => [:seat 1]
+
+;; For empty collection nil is returned
+(last [])
+;; => nil
+(last #{})
+;; => nil
+(last {})
+;; => nil
