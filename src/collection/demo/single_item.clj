@@ -66,3 +66,28 @@
 ;; => nil
 (ffirst {})
 ;; => nil
+
+;; get
+
+(get [:desk :chair :cabinet :bookcase] 2)
+;; => :cabinet
+(get #{:lumen :decibel :psi :mass} :psi)
+;; => :psi
+(get {:wheels 2 :pedal 2 :frame 1 :seat 1} :pedal)
+;; => 2
+
+;; When "key" is not found nil is returned
+(get [:desk :chair :cabinet :bookcase] 6)
+;; => nil
+(get #{:lumen :decibel :psi :mass} :speed)
+;; => nil
+(get {:wheels 2 :pedal 2 :frame 1 :seat 1} :horn)
+;; => nil
+
+;; Default value can set when "key" is not found
+(get [:desk :chair :cabinet :bookcase] 6 :closet)
+;; => :closet
+(get #{:lumen :decibel :psi :mass} :speed :zero-point)
+;; => :zero-point
+(get {:wheels 2 :pedal 2 :frame 1 :seat 1} :horn 0)
+;; => 0
