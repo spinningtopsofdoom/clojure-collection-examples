@@ -37,3 +37,21 @@
 ;; => :not-found
 ({:north :grue :south :treasure :east :pit} :east :food)
 ;; => :pit
+
+;;  Sets
+#{:bee :ant :fly :aphid}
+
+;; Sets are functions (notice a theme?)
+
+(#{:bee :ant :fly :aphid} :bee)
+;; => :bee
+
+(#{:bee :ant :fly :aphid} :ant)
+;; => :ant
+
+;; Like maps, sets return nil when the key is not found
+(#{:bee :ant :fly :aphid} :cat)
+;; => nil
+
+;; There is no way to check if nil is included in set
+(#{:bee :ant :fly :aphid nil} nil)
