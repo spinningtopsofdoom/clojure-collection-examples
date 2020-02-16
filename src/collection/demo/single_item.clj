@@ -1,4 +1,6 @@
 (ns collection.demo.single-item)
+;; Retrieving a single item from a collection
+
  ;; first
 (first [:red :orange :yellow :blue :indigo :violet])
 ;; => :red
