@@ -37,3 +37,20 @@
 ;; => [:cucumber :peas :zucchini]
 (shuffle {:phone 4 :camera 3 :gyroscope 2})
 ;; => ClassCastException Can not cast to java.util.Collection
+
+;; sort
+
+(sort [:lollipop :chocolate-bar :mint])
+;; => (:chocolate-bar :lollipop :mint)
+(sort #{:peas :cucumber :zucchini})
+;; => (:cucumber :peas :zucchini)
+(sort {:phone 4 :camera 3 :gyroscope 2})
+;; => ([:camera 3] [:gyroscope 2] [:phone 4])
+
+;; Change comparison function for sorting
+(sort (fn compare-fn [a b] (compare b a)) [:lollipop :chocolate-bar :mint])
+;; => (:mint :lollipop :chocolate-bar)
+(sort (fn compare-fn [a b] (compare b a)) #{:peas :cucumber :zucchini})
+;; => (:zucchini :peas :cucumber)
+(sort (fn compare-fn [a b] (compare b a)) {:phone 4 :camera 3 :gyroscope 2})
+;; => ([:phone 4] [:gyroscope 2] [:camera 3])
