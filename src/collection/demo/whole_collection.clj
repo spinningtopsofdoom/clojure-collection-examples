@@ -27,6 +27,15 @@
 (reverse {:phone 4 :camera 3 :gyroscope 2})
 ;; => ([:gyroscope 2] [:camera 3] [:phone 4])
 
+;; map-indexed
+
+(map-indexed (fn index-fn [index value] [value index]) [:lollipop :chocolate-bar :mint])
+;; => ([:lollipop 0] [:chocolate-bar 1] [:mint 2])
+(map-indexed  (fn index-fn [index value] [value index]) #{:peas :cucumber :zucchini})
+;; => ([:peas 0] [:zucchini 1] [:cucumber 2])
+(map-indexed (fn index-fn [index [key value]] [index value key]) {:phone 4 :camera 3 :gyroscope 2})
+;; => ([0 4 :phone] [1 3 :camera] [2 2 :gyroscope])
+
 ;; shuffle
 
 (shuffle [:lollipop :chocolate-bar :mint])
