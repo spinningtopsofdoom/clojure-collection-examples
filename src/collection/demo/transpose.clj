@@ -161,3 +161,13 @@
 
    [[[nil :empty :not :maybe] [nil nil :empty :empty] [nil nil nil nil] [nil nil nil nil]]
     (() () () ())]))
+
+(comment
+  (->>
+    (iterate
+      (fn transpose [[new-list remainder]]
+        [(conj new-list (mapv first remainder)) (map rest remainder)])
+      [[] grocery-lists])
+    (take 1000) ;; Makes the infinite list finite
+    (drop-while (fn empty-remainder [[_ remainder]] (not (every? empty? remainder)))) ;; If wrong test may cause infinite loop
+    (take 1)))
