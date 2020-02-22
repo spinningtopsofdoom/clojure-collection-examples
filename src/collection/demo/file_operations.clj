@@ -61,3 +61,76 @@
 ;; => (([:open true] [:open true]) ([:close false] [:read false]) ([:open true]))
 (partition-by first [[:open true] [:open true] [:close false] [:read false] [:open true]])
 ;; => (([:open true] [:open true]) ([:close false]) ([:read false]) ([:open true]))
+
+(defn iterate-validate-operations [file-operations]
+  (->>
+    (iterate
+      (fn validate [[validations operations prev-operations]]
+        (let [valid-next-operations (transitions prev-operations #{})
+              valid (valid-next-operations (first operations))
+              transition-step [(first operations) (not (nil? valid))]
+              next-operation (if valid valid prev-operations)]
+          [(conj validations transition-step) (rest operations) next-operation]))
+      [[] file-operations :start])
+    (drop-while (fn has-operations? [[_ operations _]] (not (empty? operations))))
+    (take 1)
+    ffirst
+    (partition-by second)))
+
+(iterate-validate-operations operations)
+(comment
+  (([:open true] [:write true] [:read true] [:read true] [:close true])
+   ([:close false] [:write false])
+   ([:open true] [:write true])
+   ([:open false] [:open false])
+   ([:read true] [:close true])))
+
+((fn validate [[validations operations prev-operations]]
+   (let [valid-next-operations (transitions prev-operations #{})
+         valid (valid-next-operations (first operations))
+         transition-step [(first operations) (not (nil? valid))]
+         next-operation (if valid valid prev-operations)]
+     [(conj validations transition-step) (rest operations) next-operation]))
+ [[] operations :start])
+;;  => [[[:open true]] (:write :read :read :close :close :write :open :write :open :open :read :close) :open]
+
+(take
+  3
+  (iterate
+    (fn validate [[validations operations prev-operations]]
+      (let [valid-next-operations (transitions prev-operations #{})
+            valid (valid-next-operations (first operations))
+            transition-step [(first operations) (not (nil? valid))]
+            next-operation (if valid valid prev-operations)]
+        [(conj validations transition-step) (rest operations) next-operation]))
+    [[] operations :start]))
+(comment
+  ([[] [:open :write :read :read :close :close :write :open :write :open :open :read :close] :start]
+
+   [[[:open true]] (:write :read :read :close :close :write :open :write :open :open :read :close) :open]
+
+   [[[:open true] [:write true]] (:read :read :close :close :write :open :write :open :open :read :close) :write]))
+
+(take 3 (map rest [[:empty] [:yep] [:narp :yarp] [:nope]]))
+;; => (() () (:yarp))
+(->>
+  [[:empty] [:yep] [:narp :yarp] [:nope]]
+  (map rest)
+  (take 3))
+;; => (() () (:yarp))
+
+(comment
+  (->>
+    (iterate
+      (fn validate [[validations operations prev-operations]]
+        (let [valid-next-operations (transitions prev-operations #{})
+              valid (valid-next-operations (first operations))
+              transition-step [(first operations) (not (nil? valid))]
+              next-operation (if valid valid prev-operations)]
+          [(conj validations transition-step) (rest operations) next-operation]))
+      [[] operations :start])
+    (take 1000) ;; Makes the infinite list finite
+    (drop-while (fn has-operations? [[_ operations _]] (not (empty? operations)))) ;; If wrong test may cause infinite loop
+    (take 1)
+    ffirst
+    (partition-by second)))
