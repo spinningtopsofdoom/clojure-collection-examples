@@ -1,4 +1,5 @@
-(ns collection.demo.queue-diffs)
+(ns collection.demo.queue-diffs
+  (:require [clojure.data :as cdata]))
 
 (def base-operations [[:init 4] [:add 3] [:add 5] [:add 4] [:drop] [:drop] [:add 9] [:add 8] [:add 1] [:clear]])
 (def diff-operations (assoc base-operations 0 [:init 2]))
@@ -62,3 +63,34 @@
    {:name :fred, :location :st-paul, :occupation :yooper}
    {:name :paula, :location :st-paul, :occupation :yooper}
    {:name :paula, :location :sf, :occupation :yooper}))
+
+(let [base-queue (map :queue (reductions dropping-queue-reducer {} base-operations))
+      diff-queue (map :queue (reductions dropping-queue-reducer {} diff-operations))]
+ (map
+   (fn difference [[base diff]]
+     (let [[in-base in-diff in-both] (cdata/diff base diff)]
+       {:base in-base :diff in-diff :both in-both}))
+   (partition 2 (interleave base-queue diff-queue))))
+(comment
+  ({:base nil, :diff nil, :both nil}
+   {:base nil, :diff nil, :both []}
+   {:base nil, :diff nil, :both [3]}
+   {:base nil, :diff nil, :both [3 5]}
+   {:base [nil nil 4], :diff nil, :both [3 5]}
+   {:base [nil 5], :diff nil, :both [3]}
+   {:base [3], :diff nil, :both nil}
+   {:base [3 9], :diff [9], :both nil}
+   {:base [3 9 8], :diff [9 8], :both nil}
+   {:base [3 9 8 1], :diff [9 8], :both nil}
+   {:base nil, :diff nil, :both []}))
+
+(cdata/diff [3 5 4] [3 5])
+;; => [[nil nil 4] nil [3 5]]
+(cdata/diff [3 5 4] [1 5 9 8])
+;; => [[3 nil 4] [1 nil 9 8] [nil 5]]
+
+(cdata/diff [nil 5 4] [1 5 9 8])
+;; => [[nil nil 4] [1 nil 9 8] [nil 5]]
+
+(cdata/diff [nil 5 4] [nil 5 9 8])
+;; => [[nil nil 4] [nil nil 9 8] [nil 5]]
