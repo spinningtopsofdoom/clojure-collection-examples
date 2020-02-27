@@ -29,5 +29,8 @@ Each examples has a link to the example file. Every line in a code block file sh
 ### Game of Life
 [Game of Life](./src/collection/demo/shift.clj) with an infinite grid and getting the dying and born cells of each step
 
-## Song Shuffle
+### Song Shuffle
 [Song Shuffle](./src/collection/demo/song_shuffle.clj) shuffles a list of songs
+
+### SQL Rank
+[SQL Rank](./src/collection/demo/sql_rank.clj) simulates SQL windowing functions and rank over a group of employees
